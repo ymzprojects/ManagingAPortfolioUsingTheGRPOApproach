@@ -19,24 +19,13 @@ This repository implements **Group Relative Policy Optimization (GRPO)** for **p
 A modern reinforcement learning method that optimizes policies using relative advantages within groups of trajectories.
 
 - **Relative Advantage Calculation:**
-  Rewards are normalized within groups of trajectories sharing the same initial state to estimate advantages. The relative advantage \( A(s,a) \) is computed as:
-  \[
-  A(s,a) = \frac{R(s,a) - \mu_R(s)}{\sigma_R(s)}
-  \]
+  Rewards are normalized within groups of trajectories sharing the same initial state to estimate advantages.
+  ![Relative Advantage Equation](https://latex.codecogs.com/svg.latex?A%28s%2Ca%29%20%3D%20%5Cfrac%7BR%28s%2Ca%29%20-%20%5Cmu_R%28s%29%7D%7B%5Csigma_R%28s%29%7D)
   where \( R(s,a) \) is the reward for action \( a \) in state \( s \), and \( \mu_R(s) \), \( \sigma_R(s) \) are the mean and standard deviation of rewards for trajectories starting from \( s \).
 
 - **LSTM-Based Policy:**
   The model uses an **LSTM** to encode temporal dependencies in asset variations, allowing it to retain a memory of past states. The LSTM cell update is defined by:
-  \[
-  \begin{align*}
-  f_t &= \sigma(W_f \cdot [h_{t-1}, x_t] + b_f) \quad \text{(Forget Gate)} \\
-  i_t &= \sigma(W_i \cdot [h_{t-1}, x_t] + b_i) \quad \text{(Input Gate)} \\
-  \tilde{C}_t &= \tanh(W_C \cdot [h_{t-1}, x_t] + b_C) \quad \text{(Candidate Memory)} \\
-  C_t &= f_t \odot C_{t-1} + i_t \odot \tilde{C}_t \quad \text{(Cell State Update)} \\
-  o_t &= \sigma(W_o \cdot [h_{t-1}, x_t] + b_o) \quad \text{(Output Gate)} \\
-  h_t &= o_t \odot \tanh(C_t) \quad \text{(Hidden State)}
-  \end{align*}
-  \]
+  ![LSTM Equations](https://latex.codecogs.com/svg.latex?%5Cbegin%7Baligned%7D%20f_t%20%26%3D%20%5Csigma%28W_f%20%5Ccdot%20%5Bh_%7Bt-1%7D%2C%20x_t%5D%20%2B%20b_f%29%20%5Cquad%20%5Ctext%7B%28Forget%20Gate%29%7D%20%5C%5C%20i_t%20%26%3D%20%5Csigma%28W_i%20%5Ccdot%20%5Bh_%7Bt-1%7D%2C%20x_t%5D%20%2B%20b_i%29%20%5Cquad%20%5Ctext%7B%28Input%20Gate%29%7D%20%5C%5C%20%5Ctilde%7BC%7D_t%20%26%3D%20%5Ctanh%28W_C%20%5Ccdot%20%5Bh_%7Bt-1%7D%2C%20x_t%5D%20%2B%20b_C%29%20%5Cquad%20%5Ctext%7B%28Candidate%20Memory%29%7D%20%5C%5C%20C_t%20%26%3D%20f_t%20%5Codot%20C_%7Bt-1%7D%20%2B%20i_t%20%5Codot%20%5Ctilde%7BC%7D_t%20%5Cquad%20%5Ctext%7B%28Cell%20State%20Update%29%7D%20%5C%5C%20o_t%20%26%3D%20%5Csigma%28W_o%20%5Ccdot%20%5Bh_%7Bt-1%7D%2C%20x_t%5D%20%2B%20b_o%29%20%5Cquad%20%5Ctext%7B%28Output%20Gate%29%7D%20%5C%5C%20h_t%20%26%3D%20o_t%20%5Codot%20%5Ctanh%28C_t%29%20%5Cquad%20%5Ctext%7B%28Hidden%20State%29%7D%20%5Cend%7Baligned%7D)
 
 - **Multi-File Buffer:**
   Efficient memory management for batch training on collected transitions.
@@ -79,9 +68,7 @@ A modern reinforcement learning method that optimizes policies using relative ad
 ## 🛠️ **Future Improvements**
 - **KL Divergence Constraint:**
   Introduce a stricter Kullback-Leibler divergence term to prevent abrupt policy updates:
-  \[
-  \mathcal{L}_{KL} = \beta \cdot D_{KL}(\pi_{\text{new}} \| \pi_{\text{old}})
-  \]
+  ![KL Divergence Equation](https://latex.codecogs.com/svg.latex?%5Cmathcal%7BL%7D_%7BKL%7D%20%3D%20%5Cbeta%20%5Ccdot%20D_%7BKL%7D%28%5Cpi_%7B%5Ctext%7Bnew%7D%7D%20%5C%7C%5C%7C%20%5Cpi_%7B%5Ctext%7Bold%7D%7D%29)
 
 - **Prioritized Experience Replay (PER):**
   Prioritize successful trajectories in the buffer to reinforce learned behaviors.
