@@ -45,8 +45,12 @@ A modern reinforcement learning method that optimizes policies using relative ad
   - \( p \): Number of historical variations per asset
 
 - **Policy Output:**
-  The model outputs a policy \( \pi(a s) \) to allocate assets, with the action space discretized into \( (2 \times \text{flexibility} + 1) \) possible allocations per asset.
-
+  The model outputs a policy
+  ![policy](https://latex.codecogs.com/svg.latex?%5Cpi%28a%7Cs%29)
+  to allocate assets, with the action space discretized into
+  ![action space](https://latex.codecogs.com/svg.latex?%282%20%5Ctimes%20%5Ctext%7Bflexibility%7D%20%2B%201%29)
+  possible allocations per asset.
+  
 ---
 ## 📂 **Repository Structure**
  | File | Description |
