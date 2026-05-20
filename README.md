@@ -9,7 +9,9 @@
 
 ## 📌 **Project Overview**
 
-This repository implements **Group Relative Policy Optimization (GRPO)** for **portfolio management** in financial markets using **synthetic data**. The goal is to train an agent to make effective trading decisions based solely on historical asset variations, without access to future information. The model leverages an **LSTM-based architecture** to remember past states through a memory vector, enabling it to capture temporal dependencies in the data.
+This repository implements **Group Relative Policy Optimization (GRPO)** for **portfolio management** in financial markets using **synthetic data**. The synthetic data includes **intentional linear relationships between assets**, deliberately embedded in high levels of noise. The goal is to evaluate whether the model can detect these relationships to improve its portfolio management decisions.
+
+The model leverages an **LSTM-based architecture** to remember past states through a memory vector, enabling it to capture temporal dependencies in the data and potentially uncover the underlying linear relationships despite the noise.
 
 ---
 
@@ -33,8 +35,8 @@ A modern reinforcement learning method that optimizes policies using relative ad
 ---
 
 ### 2. **Trading Environment**
-- **Synthetic Data:**
-  The agent is trained and evaluated on **synthetic asset variation data**, simulating realistic market conditions.
+- **Synthetic Data with Linear Relationships:**
+  The agent is trained and evaluated on **synthetic asset variation data**, where **linear relationships between assets are intentionally introduced and embedded in high noise levels**. The goal is to test whether the model can detect these relationships to improve its portfolio management.
 
 - **Input Data:**
   The agent receives the 8 most recent historical variations for each asset, formatted as a tensor of shape \( (m, n, p) \), where:
@@ -49,7 +51,9 @@ A modern reinforcement learning method that optimizes policies using relative ad
 ## 📂 **Repository Structure**
  | File | Description |
  |------|-------------|
- | **`grpo_var_data.py`** | Main script implementing the GRPO algorithm with LSTM for processing asset variation data. Includes training loops, policy evaluation, and portfolio performance tracking. |
+ | **`main.py`** | Main script implementing the GRPO algorithm with LSTM for processing asset variation data. Includes training loops, policy evaluation, and portfolio performance tracking. |
+ | **`data.py`** | Script for generating and managing synthetic asset variation data, including linear relationships and noise. |
+ | **`plot.py`** | Utility script for visualizing training progress, portfolio performance, and other metrics. |
 
 ---
 ## 📊 **Performance Analysis**
@@ -57,12 +61,14 @@ A modern reinforcement learning method that optimizes policies using relative ad
 ### **Training Results**
 - The model's portfolio evolution **outperforms a buy-and-hold strategy**, indicating that it successfully captures temporal dependencies in the synthetic asset variations.
 - The training curve shows consistent improvement, suggesting that the LSTM-based memory mechanism helps the model adapt to past states and refine its policy over time.
+- **Detection of Linear Relationships:**
+  The model's ability to outperform the baseline suggests it may be detecting the underlying linear relationships between assets, despite the high noise levels.
 
 ### **Challenges and Next Steps**
 - **High Noise Levels:**
   The weak linear dependencies in the synthetic asset variations make it challenging for the model to extract clear signals. The LSTM's memory capability helps mitigate this by retaining relevant past information.
 - **Future Work:**
-  Integrate low-accuracy asset predictions to provide the model with additional signals, potentially improving its decision-making process.
+  Further experiments could involve adjusting the noise levels or introducing more complex relationships to test the model's robustness and ability to detect patterns.
 
 ---
 ## 🛠️ **Future Improvements**
